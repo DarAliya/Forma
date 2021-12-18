@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .divborder{ 
+            width: 255px; height: 490px;
+            box-shadow: 0 0 5px 2px #b47240;
+            margin-bottom: 10px;  
+            margin: auto;
+            border-radius: 70px;
+        }
+        .divnew{
+            width: 150px; height: 25px;
+            border: 2px solid #885731;
+            background-color: orange;
+            margin-bottom: 15px; 
+            border-radius: 30px;
+        }
+        header, footer{
+        text-align: left;
+        height: 50px;
+        padding: 0;
+        margin: 0px;
+        background-color: orange;
+        }
+        .p1{
+        padding-left: 30px;
+        padding-top: 30px;
+        padding-right: 30px;
+        padding-bottom: 30px;
+        }
+        .flex-row-div{
+            display: flex;
+            align-items: flex-start;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .margint{
+            margin: auto;
+            width: 150px; height: 25px;
+            margin-bottom: 10px;
+        }
+        .hidden{
+            display: none;
+        }
+        .visable{
+            display: block;
+        }
+       </style>
+       
+</head>
+<body>
+    <header>
+        <h2>
+            Эта форма
+        </h2>
+    </header>
+        <form action="javascript:f()" method="get" name = "ex_form" id="render_ex_form">
+            <div class="divborder p1" >
+                <div>
+                    <div>Как Вам удобно получить ответ:</div>
+                    <label for="c_mail"><input type="radio" name="com_tion" id="c_mail" onclick = f1()> по почте </label><br>
+                    <label for="c_tel"><input type="radio" name="com_tion" id="c_tel" onclick = f1()> по телефону</label><br>
+                    <label for="c_none"><input type="radio" name="com_tion" id="c_none" onclick = f1() checked> не нужно отвечать</label><br>
+                </div>
+                <div>
+                    <label for="theme">
+                    Укажите тему вопроса
+                    </label><br>
+                    <select name="theme" id="theme" class="divnew">
+                        <option value="work">работа</option>
+                        <option value="cooperation">сотрудничество</option>
+                        <option value="personal">личное</option>
+                    </select>
+                </div>                
+                <div>
+                    <div class="flex-row-div">
+                        <label for="example">Ваше имя</label>
+                        <input  class="divnew" type="text"name="example"id="example"size="30"pattern="[A-Z]+"required>
+                    </div>
+                    <div class="flex-row-div hidden" id="email">
+                        <label for="email">Адрес почты</label>
+                        <input  class="divnew" type="email" name="email" >
+                    </div>
+                    <div class="flex-row-div hidden" id="tel">
+                        <label for="tel">Телефон</label>
+                        <input  class="divnew" type="tel" name="tel" >
+                    </div>
+                    <div>Ваш вопрос:</div>
+                    <div>
+                    <textarea cols="20"></textarea>
+                    </div>
+                </div>
+                <div>
+                    Пол<br>
+                    <label for="gender_m"><input type="radio" id="gender_m" name="gender" value="m" checked>Мужской</label><br>
+                    <label for="gender_w"><input type="radio" id="gender_w" name="gender" value="w" checked>Женский</label><br>
+                </div>
+                <div>
+                    <select name="city">Укажите город
+                        <option value="Dubna">Дубна</option>
+                        <option value="Moskva">Москва</option>
+                        <option value="Ufa">Уфа</option>
+                    </select>
+                    <br>
+                </div>
+                <div>
+                    <button id="render_birthday">Укажите дату рождения</button>
+                    <br>
+                    <div id="form_birthday"></div>
+                </div>
+                <div>
+                    <label for="mailing">Подписаться на рассылку</label>
+                    <input type="checkbox" id="mailing" name="mailing" value="mailing_true" checked>                
+                </div>
+            <input type="submit" value="отправить вопрос"  class="divnew margint">
+        </form>                   
+    </div>
+    <script>
+        function f(){            
+            login = document.ex_form.example.value;
+            email = document.ex_form.email.value;
+            tel = document.ex_form.tel.value;
+            console.log("Уважаемый пользователь, проверьте введенные вами данные:");
+            console.log("Логин: " + login);
+            console.log("Почта: " + email);
+            console.log("Телефон: " + tel);
+
+
+            for (i=0;i<document.ex_form.gender.length;i++){
+                if(document.ex_form.gender[i].checked){
+                    gender=document.ex_form.gender[i].value;
+                }
+            }
+            console.log("Данные из переключателей: "+gender);
+
+            
+
+            var city_en;
+            var citu_ru;
+            var index;
+            index = document.ex_form.city.selectedIndex;
+            city_en = document.ex_form.city[index].value;
+            city_ru = document.ex_form.city[index].text;
+            console.log("Данные из выпадающего списка: " + index + " " + city_en+ " " + city_ru);
+
+
+            var _mailing;
+            if(document.ex_form.mailing.checked){
+                _mailing=document.ex_form.mailing.value;
+            }
+            console.log("Данные из переключтелей: "+ _mailing); 
+            
+
+            document.getElementById("render_birthday").onclick=function(){
+            var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+            form_birthday="<form> <select name='day'>";
+            for(i = 1; i < 31; i ++){
+                form_birthday=form_birthday+"<option value="+i+">"+i+"</option>";
+            }
+                form_birthday = form_birthday+"</select><br><select name='month'>";
+            for(i = 0; i < months.length; i++){
+                form_birthday=form_birthday+"<option value="+i+">"+ months[i]+"</option>";
+            }
+            form_birthday=form_birthday+"</select>";
+            document.getElementById("form_birthday").innerHTML=form_birthday;
+            }
+
+
+            if(gender=="m") text="<h3>Уважаемый ";
+            else text = "Уважаемая ";
+            text = text + login + ", проверьте введеные данные:</h3>";
+            text = text + "Телефон: " + tel + "<br>";
+            if (mailing){
+                text = text + "Информация будет отправлена на адрес: " + email + "<br>";
+            }
+            text = text + "Будем рады видеть вас в нашем офисе в " + city_ru;
+            document.getElementById("render_ex_form").innerHTML=text;   
+        }  
+
+    for(i = 0; i < document.ex_form.com_tion.length;i++){
+        if(document.ex_form.com_tion[i].checked){
+            if(i==0){
+                document.getElementById("email").classList.remove("hidden"); 
+                document.getElementById("email").classList.add("visable"); 
+            }
+            else if(i == 1){
+                document.getElementById("tel").classList.remove("hidden"); 
+                document.getElementById("tel").classList.add("visable"); 
+            }
+        }
+    } 
+    
+    function f1()
+    {
+        if(document.ex_form.com_tion[0].checked){
+            document.getElementById("email").classList.remove("hidden"); 
+            document.getElementById("tel").classList.remove("vidable");                        
+            document.getElementById("tel").classList.add("hidden");
+            document.getElementById("email").classList.add("visable"); 
+        }
+        if(document.ex_form.com_tion[1].checked){
+            document.getElementById("tel").classList.remove("hidden");
+            document.getElementById("email").classList.remove("visable");
+            document.getElementById("email").classList.add("hidden");   
+            document.getElementById("tel").classList.add("visable"); 
+        }
+        if(document.ex_form.com_tion[2].checked){
+            document.getElementById("tel").classList.remove("visable");
+            document.getElementById("email").classList.remove("visable"); 
+            document.getElementById("email").classList.add("hidden");
+            document.getElementById("tel").classList.add("hidden");
+        }
+    }    
+    </script>
+    <footer>
+
+    </footer>
+</body>
+</html>
